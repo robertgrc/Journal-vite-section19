@@ -13,17 +13,20 @@ const formData = {
 
 const formValidations = {
   email: [(value)=>value.includes('@'), 'el correo debe tener un @'],
-  password: [(value)=>value.lenght >=6, 'el password debe tener mas de 6 caracteres'],
-  displayName: [(value)=>value.lenght >=2, 'el nombre es obligatorio'],
+  password: [(value)=>value.length >=6, 'el password debe tener mas de 6 caracteres'],
+  displayName: [(value)=>value.length >=1, 'el nombre es obligatorio'],
 }
 
 export const RegisterPage = () => {
 
   const{formState, displayName, email, password, onInputChange, isFormValid, emailValid, passwordValid, displayNameValid} = useForm(formData, formValidations);
 
+  console.log( displayNameValid )
+
+
   const onSubmit = ( event ) =>{
     event.preventDefault();
-    console.log(formState)
+    // console.log(formState)
   }
 
   return (

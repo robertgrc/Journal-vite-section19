@@ -2,6 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
+import { useState } from 'react';
 
 
 
@@ -19,6 +20,8 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const [formSubmited, setFormSubmited] = useState(false)
+
   const{formState, displayName, email, password, onInputChange, isFormValid, emailValid, passwordValid, displayNameValid} = useForm(formData, formValidations);
 
   console.log( displayNameValid )
@@ -26,11 +29,14 @@ export const RegisterPage = () => {
 
   const onSubmit = ( event ) =>{
     event.preventDefault();
-    // console.log(formState)
+    setFormSubmited(true)
+    console.log(formState)
   }
 
   return (
     <AuthLayout title="Crear cuenta">
+      {/* <h1>FormValid: {isFormValid ? 'Valido': 'Incorrecto'}</h1> */}
+
       <form onSubmit={onSubmit}>
           <Grid container>
            
@@ -43,7 +49,7 @@ export const RegisterPage = () => {
                 name="displayName"
                 value={ displayName }
                 onChange={ onInputChange }
-                error={ !displayNameValid }
+                error={ !!displayNameValid && formSubmited }
                 helperText={ displayNameValid }
               />
             </Grid>
@@ -56,6 +62,8 @@ export const RegisterPage = () => {
                 name="email"
                 value={email}
                 onChange={onInputChange}
+                error={ !!emailValid && formSubmited}
+                helperText={ emailValid }
               />
             </Grid>
             <Grid item xs={ 12 } sx={{ mt: 2 }}>
@@ -67,6 +75,8 @@ export const RegisterPage = () => {
                 name="password"
                 value={password}
                 onChange={onInputChange}
+                error={ !!passwordValid && formSubmited}
+                helperText={ passwordValid }
               />
             </Grid>
             <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>

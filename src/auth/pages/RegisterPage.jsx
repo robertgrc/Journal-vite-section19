@@ -11,10 +11,15 @@ const formData = {
   displayName: 'PRBalrog'
 }
 
+const formValidations = {
+  email: [(value)=>value.includes('@'), 'el correo debe tener un @'],
+  password: [(value)=>value.lenght >=6, 'el password debe tener mas de 6 caracteres'],
+  displayName: [(value)=>value.lenght >=2, 'el nombre es obligatorio'],
+}
 
 export const RegisterPage = () => {
 
-  const{displayName, email, password, onInputChange, formState} = useForm(formData);
+  const{formState, displayName, email, password, onInputChange, isFormValid, emailValid, passwordValid, displayNameValid} = useForm(formData, formValidations);
 
   const onSubmit = ( event ) =>{
     event.preventDefault();
@@ -33,8 +38,10 @@ export const RegisterPage = () => {
                 placeholder='Nombre completo' 
                 fullWidth
                 name="displayName"
-                value={displayName}
-                onChange={onInputChange}
+                value={ displayName }
+                onChange={ onInputChange }
+                error={ !displayNameValid }
+                helperText={ displayNameValid }
               />
             </Grid>
             <Grid item xs={ 12 } sx={{ mt: 2 }}>

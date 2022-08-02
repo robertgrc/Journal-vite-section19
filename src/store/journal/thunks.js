@@ -1,21 +1,27 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/config";
+import { addNewEmptyNote, savingNewNote, setActiveNote } from "./journalSlice";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
+    //todo: tarea dispatch
+    dispatch(savingNewNote());
+
     const { uid } = getState().auth;
     //*uid  ya tenemos el uid
     const newNote = {
       title: "",
-      body: "hi camila",
+      body: "",
       date: new Date().getTime(),
     };
 
     const newDoc = doc(collection(FirebaseDB, `${uid}/journal/notes`));
-    const setDocResp = await setDoc(newDoc, newNote);
+    await setDoc(newDoc, newNote);
 
-    console.log({ newDoc, setDocResp });
+    newNote.id = newDoc.id;
     //*dispatch
+    dispatch(addNewEmptyNote(newNote));
+    dispatch(setActiveNote(newNote));
     //*dispatch (newNota)
     //*dispatch (activateNote)
   };

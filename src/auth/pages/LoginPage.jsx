@@ -15,21 +15,15 @@ const formData = {
 
 export const LoginPage = () => {
 
-
   const { status, errorMessage } = useSelector ( state => state.auth);
-
   const dispatch = useDispatch()
-
- const{email, password, onInputChange} = useForm(formData);
-
- const isAutheticating = useMemo(()=>status==='checking', [status])
+  const{email, password, onInputChange} = useForm(formData);
+  const isAutheticating = useMemo(()=>status==='checking', [status])
 
 
 const onSubmit = (event) => {
 event.preventDefault();
-
 // console.log({email, password});
-
  dispatch(startLoginWithEmailPassword({email, password}))
 }
 
